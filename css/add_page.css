@@ -1,0 +1,575 @@
+/* BASE STYLES FOR GREEN GROCER */
+/* Make sure to add appropriate links to header of html page to ensure that logo and fonts will appear correctly */
+
+/* COLORS */
+/* To use - color: var(--green) */
+
+:root {
+    --lightest-green: #c5edce;
+    --light-green: #9ee0ad;
+    --green: #6ED184; /* Main green */
+    --dark-green: #2b8840;
+    --darker-green: #1f612d;
+    --darkest-green: #123a1b;
+}
+
+/* NAV BAR */
+
+body {margin: 0px;}
+
+.bar {
+    position: sticky; 
+    box-sizing: border-box;
+    width: 100%;
+    background: var(--green);
+    padding: 1.3rem;
+    margin: 0;
+  }
+  
+.gg {
+    font-family: 'Inter', sans-serif;
+    font-size: 23px;
+    color: white;
+    font-weight: 700;
+}
+
+/* Logo (Google Icon) */
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+  }
+    
+.icon {
+    color: white;
+    margin-top: 4px;
+}
+
+.items {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Side Bar Navigation */
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 48
+}
+  
+.openbtn {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: white;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.openbtn:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.menu-button {
+    font-size: 36px !important;
+    position: relative;
+    top: 6px;
+    left: -4px;
+}
+
+.menu-text {
+    font-size: 12px;
+    display: block;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+.all-over-bkg {
+    display: none;
+}
+
+.is-visible {
+    background-color: rgba(0,0,0,0.4);
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+    display: block;
+}
+
+#mySidenav {
+    z-index: 10000;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+    background-color: white;  
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: black;
+}
+
+.sidenav a:hover {
+    color: grey;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sidenav .closebtn:hover {
+    cursor: pointer;
+}
+
+/* TYPOGRAPHY */
+
+/* Title */
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}
+
+/* Subtitle */
+h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+/* Normal Text */
+p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5em;
+}
+
+/* BUTTON */
+/* Use <button class="hvr-grow"> Button Text </button> */
+
+.button {
+    padding: 13px 15px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: var(--green);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0px 3px #E5E4E2;
+}
+
+.button:hover {
+    background-color: var(--dark-green);
+}
+
+/*  Hover Effect */
+.hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+
+/* main content */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.left{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.recipe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 0px;
+}
+
+.recipeImg {
+    width: 600px;
+    height: 500px;
+    object-fit: cover;
+}
+
+.recipeName {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 0px;
+}
+
+.lightText {
+    line-height: 0;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.italicText {
+    line-height: 0;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 16px;
+}
+
+.recipe_info {
+    width: 600px;
+    background-color: var(--light-green);
+    display: flex;
+}
+
+.type_allergen{
+    width: 50%;
+    text-align: left;
+    box-sizing: border-box;
+    padding-left: 20px;
+}
+
+.serve_calorie{
+    width: 50%;
+    text-align: right;
+    box-sizing: border-box;
+    padding-right: 20px;
+}
+
+
+.right{
+    padding: 0px 20px 0px 20px;
+}
+
+.ulItem {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    list-style-type: circle;
+    margin-left: 35px;
+    text-indent: 20px;
+    line-height: 1.5em;
+    max-width: 625px;
+}
+
+.olItem {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    list-style-type: decimal;
+    text-indent: 15px;
+    line-height: 1.5em;
+    max-width: 625px;
+    padding-bottom: 10px;
+}
+
+.ing {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.step {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+/* back button */
+.backButton {
+    color: var(--green);
+    font-size: 40px !important;
+    padding: 20px;
+}
+
+.backButton:hover {
+    color: var(--dark-green);
+    cursor: pointer;
+}
+
+@media (max-width: 650px) {
+    .recipeImg {
+        width: 450px;
+        height: 300px;
+    }
+    .recipe_info {
+        width: 450px;
+    }
+    .container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-flow: column nowrap;
+    }
+
+    .left{
+        width: 100%;
+    }
+
+    .ing{
+        margin-right: auto;
+        box-sizing: border-box;
+        padding: 0px 20px 0px 20px;
+    }
+
+    .step{
+        box-sizing: border-box;
+        padding: 0px 20px 0px 20px;
+    }
+
+    .meal_plan_add{
+        box-sizing: border-box;
+        padding: 0px 20px 0px 20px;
+    }
+}
+
+@media (min-width: 650px) and (max-width: 1200px) {
+    .container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-flow: column nowrap;
+    }
+
+    .left{
+        width: 100%;
+    }
+
+    .ing{
+        margin-right: auto;
+        box-sizing: border-box;
+        padding: 0px 20px 0px 20px;
+    }
+
+    .step{
+        box-sizing: border-box;
+        padding: 0px 20px 0px 20px;
+    }
+
+    .meal_plan_add{
+        box-sizing: border-box;
+        padding: 0px 20px 0px 20px;
+    }
+}
+
+.meal_plan_add form select{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5em;
+    text-overflow: '';
+    padding: 8px;
+    border: 2px solid var(--green);
+    border-radius: 4px;
+    background-color: #fff;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.meal_plan_add form select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+
+.checkbox-row p{
+    margin:0px 0px 10px 0px;
+    font-size: 16px;
+}
+
+input[type="checkbox"]{
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.checkbox-group {
+    display: flex;
+}
+
+.button{
+    margin-top: 15px;
+    margin-bottom: 50px;
+}
+
+
+
+
+.hidden_section{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(211,211,211,0.7);
+    color: black;
+    z-index: 999;
+}
+
+.rec_info{
+    position: relative;
+    width: 50%;
+    height: 50%;
+    background-color: #F5F5F5;
+    border: 5px solid var(--green);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+  position: absolute;
+  right: 24px;
+  top: 15px;
+  width: 32px;
+  height: 32px;
+  opacity: 1;
+}
+.close:hover {
+    transform: scale(1.2);
+}
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 4px;
+  background-color: var(--green);
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
+
+
+.hidden{
+    display: none;
+}
+
+.visible{
+    display: flex;
+}
+
+
+.hidden_section form {
+    width: 70%;
+    height: 60%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+label[for="start_date"] {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 5px;
+}
+
+
+.hidden_section input[type="date"] {
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.hidden_section input[type="submit"] {
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    padding: 13px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: var(--green);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0px 3px #E5E4E2;
+}
+.hidden_section input[type="submit"]:hover {
+    background-color: var(--dark-green);
+}

@@ -1,0 +1,450 @@
+body {margin: 0px; font-family: inter, sans-serif;}
+
+.bar {
+    position: sticky; 
+    box-sizing: border-box;
+    width: 100%;
+    background: #6ED184;
+    padding: 1.3rem;
+    /* border-bottom: thin solid #E11584; */
+    margin: 0;
+  }
+  
+.gg {
+    font-family: 'Inter', sans-serif;
+    font-size: 23px;
+    color: white;
+    font-weight: 700;
+}
+  
+/* GOOGLE ICON */
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+  
+.icon {
+    color: white;
+    margin-top: 4px;
+}
+  
+.items {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Side Bar Navigation */
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 48
+  }
+  
+  .openbtn {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      color: white;
+      font-family: 'PT Sans', sans-serif;
+  }
+  .openbtn:hover {
+      color: black;
+      cursor: pointer;
+  }
+  .menu-button {
+      font-size: 36px !important;
+      position: relative;
+      top: 6px;
+      left: -4px;
+  }
+  .menu-text {
+      font-size: 12px;
+      display: block;
+  }
+  ul {
+      margin: 0;
+      padding: 0;
+  }
+  li {
+      list-style-type: none;
+  }
+  
+  /* The side navigation menu */
+  .all-over-bkg {
+      display: none;
+  }
+  
+  .is-visible {
+      background-color: rgba(0,0,0,0.4);
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: 100%;
+      z-index: 9999;
+      display: block;
+  }
+  
+  #mySidenav {
+      z-index: 10000;
+  }
+  
+  .sidenav {
+      height: 100%; /* 100% Full-height */
+      width: 0; /* 0 width - change this with JavaScript */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Stay on top */
+      top: 0; /* Stay at the top */
+      right: 0;
+      overflow-x: hidden; /* Disable horizontal scroll */
+      padding-top: 60px; /* Place content 60px from the top */
+      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+      background-color: white;  
+  }
+    
+  /* The navigation menu links */
+  .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      color: black;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+      color: grey;
+  }
+  
+  /* Position and style the close button (top right corner) */
+  .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+  }
+
+  .sidenav .closebtn:hover {
+    cursor: pointer;
+  }
+/*body container*/
+.creation_container {
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+  
+}
+.image_insert {
+    display: flex;
+}
+
+  /* image insert */
+  .file {
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+  }
+  .file-input {
+    display: flex;
+    width: 600px;
+  }
+  .file-input h1 {
+    display: flex;
+    align-self: center;
+    margin-left: 10%;
+    
+  }
+ 
+  .file-input label {
+    display: block;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 7px;
+    background-color: lightgrey;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 100px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform .2s ease-out;
+  }
+input:hover + label,
+input:focus + label {
+  transform: scale(1.02);
+}
+
+  .file-name {
+    position: absolute;
+    bottom: -35px;
+    left: 10px;
+    font-size: 0.85rem;
+    color: #555;
+  }
+  .file_first {
+    display: flex;
+    flex-direction: column;
+  }
+  .file_first button {
+    margin-top: 20px;
+    width: 200px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 20px;
+    background-color: white;
+    border: 2px solid #6ED184;
+    color: #6ED184;
+    letter-spacing: 3px;
+    font-weight: bold;
+  }
+  /* recipe information insert */
+  .recipe_info {
+    margin-top: 30px;
+  }
+  /* recipe name */
+  .name {
+    font-size: 20px;
+  }
+ #name {
+    width: 200px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid gray;
+    font-size: 20px;
+}
+
+  /* recipe ingredient */
+.recipe_ingredient {
+    margin-top: 3%;
+  }
+  .add {
+    cursor: pointer;
+    color: #6ED184;
+  }
+.appending_div .lable {
+    font-size: 20px;
+ }
+
+ #ingred_name {
+  width: 150px;
+  height: 30px;
+  font-size: 20px;
+  border-radius: 7px;
+  border: 1px solid gray;
+ }
+ #ingred_quant {
+  width: 80px;
+  height: 30px;
+  font-size: 20px;
+  border-radius: 7px;
+  border: 1px solid gray;
+ }
+ /* recipe steps */
+ .recipe_steps {
+    margin-top: 3%;
+ } 
+ .add1 {
+    cursor: pointer;
+    color: #6ED184;
+  }
+  .appending_div1 .steps {
+    font-size: 20px;
+    display: flex;
+  }
+  .appending_div1 textarea {
+    width: 600px;
+    height: 100px;
+    font-size: 20px;
+    font-family: inter, sans-serif;
+    border-radius: 7px;
+    border: 1px solid gray;
+  }
+  /*recipe ingredient & step*/
+  .delete {
+    border: 0;
+    font-size: 15px;
+    color: red;
+  }
+  /*recipe Cuisine*/
+  .recipe_cuisine {
+    margin-top: 3%;
+    width: 900px;
+    
+  }
+ 
+  .recipe_cuisine input[type="radio"] {
+    width: 15px;
+    height: 15px;
+    cursor:pointer;
+  }
+  .recipe_cuisine label {
+    font-size: 20px;
+    margin-right: 15px;
+  }
+  /*recipe meal type*/
+  .meal_type {
+    margin-top: 3%;
+  }
+  .meal_type input[type="radio"] {
+    width: 15px;
+    height: 15px;
+    cursor:pointer;
+  }
+  .meal_type label {
+    font-size: 20px;
+    margin-right: 15px;
+  }
+  /*Recipe Calories*/
+  .recipe_calories {
+    margin-top: 3%;
+  }
+  .calories {
+    font-size: 20px;
+  }
+ #calories {
+    width: 150px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid gray;
+    font-size: 20px;
+}
+.recipe_serving {
+  margin-top: 3%;
+}
+.serving {
+  font-size: 20px;
+}
+#serving {
+  width: 40px;
+  height: 40px;
+  border-radius: 7px;
+  border: 1px solid gray;
+  font-size: 20px;
+  text-align: center;
+}
+/*dropdown metrics*/
+#metric {
+  height: 100px;
+}
+/*recipe Preference*/
+.recipe_preference {
+  margin-top: 3%;
+  width: 900px;
+}
+.recipe_preference input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor:pointer;
+}
+.recipe_preference label {
+  font-size: 20px;
+  margin-right: 15px;
+}
+/*recipe Allergy*/
+.recipe_Allergy {
+  margin-top: 3%;
+  width: 900px;
+}
+.recipe_Allergy input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor:pointer;
+}
+.recipe_Allergy label {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+  /*submit button*/
+  .savesub {
+    background-color: #6ED184;
+    width: 300px;
+    height: 40px;
+    font-size: 24px;
+    letter-spacing: 3px;
+    border-radius: 7px;
+    font-weight: bolder;
+    border: none;
+    color: white;
+    margin-top: 5%;
+    cursor: pointer;
+  }
+
+  /*pop up message*/
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #6ED184;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    color:white;
+}
+
+/* Style for the close button */
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+.popup-close:hover {
+    color: red;
+}
+
+@media screen and (max-width: 900px) {
+  .appending_div1 textarea {
+    width: 400px;
+    height: 100px;
+    
+  }
+  .recipe_preference {
+    width: 600px;
+  }
+  .recipe_allergy {
+    width: 600px;
+  }
+  .recipe_cuisine {
+    width: 900px;
+    
+  }
+}
+@media screen and (max-width: 600px) {
+  .appending_div1 textarea {
+    width: 300px;
+    height: 100px;
+    
+  }
+  .recipe_preference {
+    width: 400px;
+  }
+  .recipe_allergy {
+    width: 400px;
+  }
+  .recipe_cuisine {
+    width: 400px;
+    
+  }
+}

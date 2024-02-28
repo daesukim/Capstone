@@ -1,0 +1,771 @@
+/* BASE STYLES FOR GREEN GROCER */
+/* Make sure to add appropriate links to header of html page to ensure that logo and fonts will appear correctly */
+
+/* COLORS */
+/* To use - color: var(--green) */
+
+:root {
+    --lightest-green: #c5edce;
+    --light-green: #9ee0ad;
+    --green: #6ED184; /* Main green */
+    --dark-green: #2b8840;
+    --darker-green: #1f612d;
+    --darkest-green: #123a1b;
+}
+
+/* NAV BAR */
+
+body {margin: 0px;}
+
+.bar {
+    position: sticky; 
+    box-sizing: border-box;
+    width: 100%;
+    height: 75px;
+    background: var(--green);
+    padding: 1.3rem;
+    margin: 0;
+    z-index: 100;
+  }
+  
+.gg {
+    font-family: 'Inter', sans-serif;
+    font-size: 23px;
+    color: white;
+    font-weight: 700;
+}
+
+/* Logo (Google Icon) */
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+  }
+    
+.icon {
+    color: white;
+    margin-top: 4px;
+}
+
+.items {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Side Bar Navigation */
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 48
+}
+  
+.openbtn {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: white;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.openbtn:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.menu-button {
+    font-size: 36px !important;
+    position: relative;
+    top: 6px;
+    left: -4px;
+}
+
+.menu-text {
+    font-size: 12px;
+    display: block;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+.all-over-bkg {
+    display: none;
+}
+
+.is-visible {
+    background-color: rgba(0,0,0,0.4);
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 9999;
+    display: block;
+}
+
+#mySidenav {
+    z-index: 10000;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+    background-color: white;  
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: black;
+}
+
+.sidenav a:hover {
+    color: grey;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sidenav .closebtn:hover {
+    cursor: pointer;
+}
+
+/* TYPOGRAPHY */
+
+/* Title */
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}
+
+/* Subtitle */
+h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+/* Normal Text */
+p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5em;
+}
+
+/* BUTTON */
+/* Use <button class="hvr-grow"> Button Text </button> */
+
+button {
+    padding: 13px 15px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: var(--green);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0px 3px #E5E4E2;
+    max-width: 100px;
+}
+
+button:hover {
+    background-color: var(--dark-green);
+}
+
+/*  Hover Effect */
+.hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+/* PAGE CONTENT */
+
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+/* Top Content */
+
+.top {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 75px 200px 100px;
+    justify-content: space-between;
+}
+
+.top-left {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.topImg {
+    width: 500px;
+    height: auto;
+}
+
+.topText {
+    font-size: 60px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.topDescr {
+    max-width: 450px;
+    margin: 35px 0px;
+}
+
+/* Our Mission */
+
+.mission {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.missionTitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 50px;
+    margin: 0;
+}
+
+.subtext {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 25px;
+    max-width: 800px;
+    padding-top: 10px;
+    line-height: 1.5em;
+}
+
+.missionImg {
+    width: 325px;
+    height: auto;
+    padding-top: 50px;
+    padding-bottom: 25px;
+}
+
+.missionDiv {
+    background-color: var(--lightest-green);
+    width: 100%;
+}
+
+/* Features */
+
+.item {
+    display: flex;
+    flex-flow: row nowrap;
+    max-width: 1300px;
+    padding-top: 75px;
+    align-items: center;
+}
+
+.itemL {
+    display: flex;
+    flex-flow: row nowrap;
+    max-width: 1300px;
+    padding-top: 75px;
+    align-items: center;
+}
+
+.titleR {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 45px;
+    text-align: right;
+    margin: 0;
+    color: #6ED184;
+}
+
+.subtextR {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    max-width: 900px;
+    text-align: right;
+    padding-top: 10px;
+    line-height: 1.5em;
+}
+
+.textBlockR {
+    flex-direction: column nowrap;
+    max-width: 600px;
+    padding-left: 50px;
+}
+
+.image {
+    width: 500px;
+    height: auto;
+}
+
+.titleL {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 45px;
+    text-align: left;
+    margin: 0;
+    color: #6ED184;
+}
+
+.subtextL {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    max-width: 900px;
+    text-align: left;
+    padding-top: 10px;
+    line-height: 1.5em;
+}
+
+.textBlockL {
+    flex-direction: column nowrap;
+    max-width: 600px;
+    padding-right: 50px;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 700px) {
+    .mission { 
+        max-width: 800px;
+        margin: 0 auto;
+        align-items: center;
+        flex-flow: column nowrap;
+        gap: 0;
+    }
+    .missionImg {
+        width: 275px;
+        height: auto;
+        margin: 15px 0px 0px;
+        padding: 0;
+    }
+    .subtext { 
+        font-size: 18px;
+        margin: 0px 30px 40px;
+        padding: 0;
+    }
+    .item { 
+        max-width: 500px;
+        flex-flow: column nowrap; 
+        padding-top: 50px;
+    }
+    .itemL { 
+        max-width: 500px;
+        flex-flow: column nowrap;
+        padding-top: 50px;
+    }
+    .itemL div:first-child {
+        order: 1;
+    }
+    .textBlockL { 
+        padding: 0;
+        margin: 0;
+        max-width: 500px;
+    }
+    .textBlockR {
+        padding: 0;
+        margin: 0;
+        max-width: 500px;
+    }
+    .image { 
+        width: 300px; 
+        margin: 0;
+        padding: 0;
+    }
+    .titleR { 
+        font-size: 30px;
+        text-align: center;
+        padding-top: 30px;
+        max-width: 500px;
+    }
+    .titleL {
+        font-size: 30px;
+        text-align: center;
+        padding-top: 30px;
+        max-width: 500px;
+    }
+    .subtextL {
+        text-align: center;
+        max-width: 500px;
+        font-size: 16px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .subtextR {
+        text-align: center;
+        max-width: 500px;
+        font-size: 16px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .subtext { 
+        font-size: 20px;
+    }
+    .topImg {
+        width: 275px;
+        height: auto;
+        margin: 0 auto;
+    }
+    .top {
+        margin: 50px 50px;
+        flex-flow: column-reverse nowrap;
+        justify-content: center;
+        gap: 25px;
+    }
+    .topText { 
+        font-size: 40px;
+        text-align: center;
+    }
+    .top-left {
+        justify-content: center;
+        align-items: center;
+    }
+    .topDescr {
+        max-width: 500px;
+        text-align: center;
+    }
+}
+
+@media (min-width: 700px) and (max-width: 800px) {
+    .mission { 
+        max-width: 800px;
+        margin: 0 auto;
+        align-items: center;
+    }
+    .missionImg {
+        margin-right: 0;
+        padding-right: 0;
+    }
+    .subtext { 
+        max-width: 450px;
+        font-size: 16px;
+        padding-left: 0px;
+    }
+    .item { 
+        max-width: 550px;
+        flex-flow: column nowrap; 
+        padding-top: 50px;
+    }
+    .itemL { 
+        max-width: 550px;
+        flex-flow: column nowrap;
+        padding-top: 50px;
+    }
+    .itemL div:first-child {
+        order: 1;
+    }
+    .textBlockL { 
+        padding: 0;
+        margin: 0;
+        max-width: 550px;
+    }
+    .textBlockR {
+        padding: 0;
+        margin: 0;
+        max-width: 550px;
+    }
+    .image { 
+        width: 300px; 
+        margin: 0;
+        padding: 0;
+    }
+    .titleR { 
+        font-size: 30px;
+        text-align: center;
+        padding-top: 30px;
+        max-width: 550px;
+    }
+    .titleL {
+        font-size: 30px;
+        text-align: center;
+        padding-top: 30px;
+        max-width: 550px;
+    }
+    .subtextL {
+        text-align: center;
+        max-width: 550px;
+        font-size: 18px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .subtextR {
+        text-align: center;
+        max-width: 550px;
+        font-size: 18px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .subtext { 
+        font-size: 20px;
+    }
+    .topImg {
+        width: 300px;
+        height: auto;
+        margin: 0 auto;
+    }
+    .top {
+        margin: 50px 50px;
+        flex-flow: column-reverse nowrap;
+        justify-content: center;
+        gap: 25px;
+    }
+    .topText { font-size: 40px; }
+    .top-left {
+        justify-content: center;
+        align-items: center;
+    }
+    .topDescr {
+        max-width: 500px;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 900px) {
+    .mission { 
+        max-width: 800px;
+        margin: 0 auto;
+        align-items: center;
+    }
+    .missionImg {
+        margin-right: 0;
+        padding-right: 0;
+    }
+    .subtext { 
+        max-width: 450px;
+        font-size: 16px;
+        padding-left: 0px;
+    }
+    .item { 
+        max-width: 600px;
+        flex-flow: column nowrap; 
+        padding-top: 50px;
+    }
+    .itemL { 
+        max-width: 600px;
+        flex-flow: column nowrap;
+        padding-top: 50px;
+    }
+    .itemL div:first-child {
+        order: 1;
+    }
+    .textBlockL { 
+        padding: 0;
+        margin: 0;
+        max-width: 600px;
+    }
+    .textBlockR {
+        padding: 0;
+        margin: 0;
+        max-width: 600px;
+    }
+    .image { 
+        width: 300px; 
+        margin: 0;
+        padding: 0;
+    }
+    .titleR { 
+        font-size: 30px;
+        text-align: center;
+        padding-top: 30px;
+        max-width: 600px;
+    }
+    .titleL {
+        font-size: 30px;
+        text-align: center;
+        padding-top: 30px;
+        max-width: 600px;
+    }
+    .subtextL {
+        text-align: center;
+        max-width: 600px;
+        font-size: 18px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .subtextR {
+        text-align: center;
+        max-width: 600px;
+        font-size: 18px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .subtext { 
+        font-size: 20px;
+    }
+    .topImg {
+        width: 400px;
+        height: auto;
+    }
+    .top {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    .topText { font-size: 40px; }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 900px) and (max-width: 1000px) {
+    .mission { 
+        max-width: 800px;
+        align-items: center;
+        margin: 0 auto;
+    }
+    .item { 
+        max-width: 800px;
+        flex-flow: column nowrap; 
+    }
+    .itemL { 
+        max-width: 800px;
+        flex-flow: column nowrap;
+    }
+    .itemL div:first-child {
+        order: 1;
+    }
+    .textBlockL { 
+        padding: 0;
+        margin: 0;
+        max-width: 750px;
+    }
+    .textBlockR {
+        padding: 0;
+        margin: 0;
+        max-width: 750px;
+    }
+    .image { 
+        width: 400px; 
+        margin: 0;
+        padding: 0;
+    }
+    .titleR { 
+        font-size: 35px;
+        text-align: center;
+        padding-top: 30px;
+    }
+    .titleL {
+        font-size: 35px;
+        text-align: center;
+        padding-top: 30px;
+    }
+    .subtextL {
+        text-align: center;
+        max-width: 700px;
+    }
+    .subtextR {
+        text-align: center;
+        max-width: 700px;
+    }
+    .subtext { 
+        font-size: 22px;
+    }
+    .topImg {
+        width: 450px;
+        height: auto;
+    }
+    .top {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    .topText { font-size: 50px; }
+
+}
+
+@media (min-width: 1000px) and (max-width: 1100px) {
+    .image { width: 400px; }
+    .item { max-width: 850px; }
+    .itemL { max-width: 850px; }
+    .missionTitle { font-size: 40px; }
+    .titleR { font-size: 35px; }
+    .titleL { font-size: 35px; }
+    .topImg {
+        width: 450px;
+        height: auto;
+    }
+    .top {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .topText { font-size: 50px; }
+    .subText { font-size: 22px; }
+    .mission { 
+        max-width: 900px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1100px) and (max-width: 1225px) {
+    .image { width: 400px; }
+    .item { max-width: 1000px; }
+    .itemL { max-width: 1000px; }
+    .missionTitle { font-size: 40px; }
+    .titleR { font-size: 35px; }
+    .titleL { font-size: 35px; }
+    .topImg {
+        width: 500px;
+        height: auto;
+    }
+    .top {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 1225px) and (max-width: 1325px) {
+    .image { width: 400px; }
+    .item { max-width: 1000px; }
+    .itemL { max-width: 1000px; }
+    .missionTitle { font-size: 40px; }
+    .titleR { font-size: 35px; }
+    .titleL { font-size: 35px; }
+    .top {
+        margin-left: 150px;
+        margin-right: 150px;
+    }
+}
