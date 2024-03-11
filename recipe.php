@@ -16,6 +16,12 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+session_start();
+            if (!isset($_SESSION['user_id'])) {
+                header("Location: login.php");
+                exit();
+                //$_SESSION['user_id'] = 1234567;
+            }
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -45,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("i", $cuisineType);
         $stmt->execute();
     }
+    
     /* Get the name of the file uploaded to Apache */
 $filename = $_FILES['file']['name'];
 
@@ -53,9 +60,7 @@ $location = "image/".$filename;
 
 /* Permanently save the file upload to the upload folder */
 if ( move_uploaded_file($_FILES['file']['tmp_name'], $location) ) { 
-  echo '<p>Your image upload was success</p>'; 
 } else { 
-  echo '<p>Try to upload another image</p>'; 
 }
 
 $fileUrl = 'https://cgi.luddy.indiana.edu/~team25/project/image/' . basename($_FILES["file"]["name"]);
@@ -72,6 +77,7 @@ $successMessage = ""; // Initialize success message
 
 
 if ($stmt->execute()) {
+    
     // Get the last inserted recipe ID
     $recipeID = $stmt->insert_id;
         
@@ -136,16 +142,10 @@ if ($stmt->execute()) {
         }
     }
 
-
-        // Display success message or redirect to a success page
-        echo "Recipe inserted successfully!";
-    } else {
-        // Display an error message or handle the error accordingly
-        echo "Error: " . $stmt->error;
+    $stmt->error;
     }
 }
 
-/*image insert*/
 
 
 
@@ -197,41 +197,42 @@ $conn->close();
         <ul>
             <div class="items">
                 <li>
-                    <span class="icon material-symbols-outlined">grocery</span>
+                    <a href="index.html"><span class="icon material-symbols-outlined">grocery</span></a>
                 </li>  
                 <li class="gg"> GreenGrocer </li>
             </div>
         </ul>    
 
         <!-- Side Navigation -->
-            <nav id="mySidenav" class="sidenav">
-                <ul>
+        <nav id="mySidenav" class="sidenav">
+            <ul>
                 <li><a class="closebtn">&times;</a></li>
                 <li><a href="landing.php">Home</a></li>
                 <li><a href="view_recipe.php">View Recipes</a></li>
+		<li><a href="recipe.php">Create Recipe</a></li>
                 <li><a href="meal_plan.php">My Meal Plan</a></li>
                 <li><a href="calorie.php">Calorie Conscious Meal Plan</a></li>
-                <li><a href="profile.php">Profile Settings</a></li>
-                <li><a href="recipe.php">Recipe Creation</a></li>
+		<li><a href="profile.php">Profile Settings</a></li>
+            </ul>
+        </nav>
 
-                </ul>
-            </nav>
+        <!-- Open Side Navigtaion -->
+        <div class="openbtn">
+            <span class="material-symbols-outlined menu-button">menu</span>
+        </div>
 
-            <!-- Open Side Navigtaion -->
-            <div class="openbtn">
-                <span class="material-symbols-outlined menu-button">menu</span>
-            </div>
-
-            <div class="all-over-bkg"></div>
+        <div class="all-over-bkg"></div>
 
     </div>
+
     <!-- body -->
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
     <div class="creation_container">
+    <p style="color:red;">*Only allows PNG or JPEG Files</p>
         <div class="image_insert">
         <div class="file-input">
         <div class="file_first">
-        <input type="file" name="file" id="file" class="file">
+        <input type="file" name="file" id="file" class="file" accept=".jpeg, .jpg, .png" autofocus="false">
             <label for="file">+<p class="file-name"></p></label>
         </div>
         <h1>Add Your <br> Recipe Image</h1>
@@ -344,7 +345,7 @@ $conn->close();
                 <input type="number" id="serving" name="serving" placeholder="1" required>
             </div>
             </div>
-            <button class="savesub" id="recipeid" type="submit" onclick="showPopup()">SAVE&SUBMIT</button>
+            <button class="savesub" id="recipeid" type="" onclick="showPopup()">SAVE&SUBMIT</button>
             <div class="popup" id="successPopup">
             <span class="popup-close" onclick="closePopup()">&times;</span>
             <p>Your recipe is successfully uploaded!</p>
@@ -355,7 +356,7 @@ $conn->close();
     <!-- Nav Bar Javascript -->
     <script>
     /* nav bar */
-        function openNav() {
+    function openNav() {
     document.querySelector('#mySidenav').style.width = "250px"; 
     document.querySelector('.all-over-bkg').classList.add('is-visible');
   }
@@ -463,12 +464,17 @@ $conn->close();
     /*pop up menu*/
     function showPopup() {
             document.getElementById('successPopup').style.display = 'block';
+            setTimeout(closePopup, 3000);
         }
 
         // Function to close the pop-up
     function closePopup() {
             document.getElementById('successPopup').style.display = 'none';
         }
+
+
+    
+
 
     </script>
 </body>

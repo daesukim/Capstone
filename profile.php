@@ -74,9 +74,22 @@ mysqli_close($conn);
             }
 
             session_start();
+            if (!isset($_SESSION['user_id'])) {
+                header("Location: login.php");
+                exit();
+                //$_SESSION['user_id'] = 1234567;
+            }
 
             if (isset($_SESSION['user_id'])) {
                 $userEmail = $_SESSION['email'];
+
+                $userGenderQuery = "SELECT Gender FROM User WHERE Email = '$userEmail'";
+                $userGenderResult = mysqli_query($conn, $userGenderQuery);
+                $userGender = mysqli_fetch_assoc($userGenderResult)['Gender'];
+
+                $userAgeQuery = "SELECT Age FROM User WHERE Email = '$userEmail'";
+                $userAgeResult = mysqli_query($conn, $userAgeQuery);
+                $userAge = mysqli_fetch_assoc($userAgeResult)['Age'];
 
                 // Query to get user height
                 $userHeightQuery = "SELECT Height FROM User WHERE Email = '$userEmail'";
@@ -88,13 +101,32 @@ mysqli_close($conn);
                 $userWeightResult = mysqli_query($conn, $userWeightQuery);
                 $userWeight = mysqli_fetch_assoc($userWeightResult)['Weight'];
 
+                $userActivityQuery = "SELECT activity_level FROM User WHERE Email = '$userEmail'";
+                $userActivityResult = mysqli_query($conn, $userActivityQuery);
+                $userActivity = mysqli_fetch_assoc($userActivityResult)['activity_level'];
+
                 echo "<h1>" . $_SESSION['first_name'] . "</h1>";
                 echo "<p>" . $_SESSION['email'] . "</p>";
-                echo "<p>Height: " . $userHeight . " in | Weight: " . $userWeight . " lbs</p>";
+                echo "<p>". $userGender. " | ". "Age: ". $userAge. " | Height: " . $userHeight . " in | Weight: " . $userWeight . " lbs</p>";
+                
+                if ($userActivity == 1) {
+                    echo "Activity Level: Moderate";
+                } elseif ($userActivity == 2) {
+                    echo "Activity Level: Lightly Active";
+                } elseif ($userActivity == 3) {
+                    echo "Activity Level: Moderately Active";
+                } elseif ($userActivity == 4) {
+                    echo "Activity Level: Very Active";
+                } elseif ($userActivity == 5) {
+                    echo "Activity Level: Extra Active";
+                } else {
+                    echo "Unknown activity level";
+                }            
             } else {
                 echo "<h1> Name </h1>";
                 echo "<p class='show_email'>Email</p>";
-                echo "<p class='show_profile_info'>Height | Weight</p>";
+                echo "<p class='show_profile_info'>Gender | Age | Height | Weight</p>";
+                echo "<p class='show_profile_info'>Activity Level</p>";
             }
 
             mysqli_close($conn);
@@ -210,7 +242,7 @@ mysqli_close($conn);
                             <input type="hidden" name="selectedAllergy" id="selectedAllergy" value="">
                         </div>
                         <div class="household_section">
-                            <h2>NUMBER OF HOUSEHOLD</h2>
+                            <h2>Serving Number</h2>
                             <div class="household_input">
                             <?php
                             $conn = mysqli_connect("db.luddy.indiana.edu", "i494f23_team25", "my+sql=i494f23_team25", "i494f23_team25");
@@ -238,7 +270,7 @@ mysqli_close($conn);
                                 -->
                             </div>
                         </div>
-                        <a href="profile_edit.php"><button class="savesub">Edit My Setting</button></a>
+                       <button class="savesub"><a href="profile_edit.php" style="text-decoration: none; color: white;">Edit My Setting</a></button>
                 </div>
             </div>
         </div>

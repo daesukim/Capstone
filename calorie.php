@@ -1,3 +1,10 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
+        exit();
+    }
+?>
 <html>
 <head>
 <title>
@@ -13,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -34,10 +42,10 @@
             <li><a class="closebtn">&times;</a></li>
             <li><a href="landing.php">Home</a></li>
             <li><a href="view_recipe.php">View Recipes</a></li>
-	    <li><a href="recipe.php">Create Recipe</a></li>
+            <li><a href="recipe.php">Create Recipe</a></li>
             <li><a href="meal_plan.php">My Meal Plan</a></li>
             <li><a href="calorie.php">Calorie Conscious Meal Plan</a></li>
-	    <li><a href="profile.php">Profile Settings</a></li>
+            <li><a href="profile.php">Profile Settings</a></li>
         </ul>
     </nav>
 
@@ -53,28 +61,21 @@
 <!-- Nav Bar Javascript -->
 <script src="js/nav.js"></script>
 
-    <!-- Javascript to submit form -->
-    <script>
-        function submitForm(recipeID) {
-            document.getElementById("individualRecipe" + recipeID).submit();
-        }
-    </script>
-
 <!-- Javascript if add to plan is clicked without start date -->
 <script>
     function addError() {
-        alert("You must pick a start date first to add to meal plan.");
+        alert("You must select a start date first.");
+    }
+</script>
+
+<!-- Javascript to submit form -->
+<script>
+    function submitForm(recipeID) {
+        document.getElementById("individualRecipe" + recipeID).submit();
     }
 </script>
 
 <?php
-
-    // Sessions
-    session_start();
-    if (!isset($_SESSION['user_id'])) {
-        $_SESSION['user_id'] = '1234567';
-    }
-
     // Establish connection
     $servername = "db.luddy.indiana.edu";
     $username = "i494f23_team25";
@@ -116,109 +117,111 @@
         echo '<script> dPopup3.classList.add("open"); </script>';
     } else {
 
-    // Do calorie calculation
-    $kg_weight = $weight * 0.453592;
-    $cm_height = $height * 2.54;
+        // Do calorie calculation
+        $kg_weight = $weight * 0.453592;
+        $cm_height = $height * 2.54;
 
-    if ($gender == 'M') {
-        $bmr = 10 * $kg_weight + 6.25 * $cm_height - 5 * $age + 5;
-    } else {
-        $bmr = 10 * $kg_weight + 6.25 * $cm_height - 5 * $age - 161;
-    }
+        if ($gender == 'M') {
+            $bmr = 10 * $kg_weight + 6.25 * $cm_height - 5 * $age + 5;
+        } else {
+            $bmr = 10 * $kg_weight + 6.25 * $cm_height - 5 * $age - 161;
+        }
 
-    switch ($activity_level) {
-        case "Sedentary":
-            $cal_intake = $bmr * 1.2;
-            break;
-        case "Lightly Active":
-            $cal_intake = $bmr * 1.375;
-            break;
-        case "Moderately Active":
-            $cal_intake = $bmr * 1.55;
-            break;
-        case "Very Active":
-            $cal_intake = $bmr * 1.725;
-            break;
-        case "Extra Active":
-            $cal_intake = $bmr * 1.9;
-            break;
-    }
+        switch ($activity_level) {
+            case "Sedentary":
+                $cal_intake = $bmr * 1.2;
+                break;
+            case "Lightly Active":
+                $cal_intake = $bmr * 1.375;
+                break;
+            case "Moderately Active":
+                $cal_intake = $bmr * 1.55;
+                break;
+            case "Very Active":
+                $cal_intake = $bmr * 1.725;
+                break;
+            case "Extra Active":
+                $cal_intake = $bmr * 1.9;
+                break;
+        }
 
-    $cal_intake = ceil($cal_intake);
+        $cal_intake = ceil($cal_intake);
 
-    // Get number of people user is cooking for
-    $num_cook_sql = "SELECT IFNULL(Num_CookingFor, 1) AS 'num_cook' FROM User WHERE GoogleAuth = " . $_SESSION['user_id'];
-    $num_cook_res = mysqli_query($con, $num_cook_sql);
-    $num_cook = mysqli_fetch_assoc($num_cook_res);
-	
-	$single_cal = "";
-	$note = "";    
-// If user is cooking for more than 1 person, adjust cal_intake
-    if ($num_cook['num_cook'] > 1) {
-        $cal_intake = $cal_intake * $num_cook['num_cook'];
+        // Get number of people user is cooking for
+        $num_cook_sql = "SELECT IFNULL(Num_CookingFor, 1) AS 'num_cook' FROM User WHERE GoogleAuth = " . $_SESSION['user_id'];
+        $num_cook_res = mysqli_query($con, $num_cook_sql);
+        $num_cook = mysqli_fetch_assoc($num_cook_res);
 
-        $single_cal = '<h4 class="single-cal">Daily Calories per Person: ' . ceil($cal_intake / $num_cook["num_cook"]) . '</h4>';
-	$note = '<p class="italic">Warning: Daily calorie calculation based only on your information in profile creation.</p>';    
-}
+        $note = "";
+        // If user is cooking for more than 1 person, adjust cal_intake
+        if ($num_cook['num_cook'] > 1) {
+            $cal_intake = $cal_intake * $num_cook['num_cook'];
 
-    // Get calories and IDs for all recipes according to how many people user is cooking for
-    $breakfast_sql = "SELECT CEILING((r.calories / r.servings) * " . $num_cook['num_cook'] . ") AS 'calories', r.RecipeID AS 'recipeID'
+            $note = '<p class="italic">Warning: You are cooking for ' . $num_cook["num_cook"] . ' people but this meal plan is only for one person.</p>';
+        }
+
+        // Get calories and IDs for all recipes according to how many people user is cooking for
+        $breakfast_sql = "SELECT CEILING((r.calories / r.servings) * " . $num_cook['num_cook'] . ") AS 'calories', r.RecipeID AS 'recipeID'
+                                FROM Recipe AS r
+                                WHERE r.meal_type = 1";
+        $lunch_sql = "SELECT CEILING((r.calories / r.servings) * " . $num_cook['num_cook'] . ") AS 'calories', r.RecipeID AS 'recipeID'
                             FROM Recipe AS r
-                            WHERE r.meal_type = 1";
-    $lunch_sql = "SELECT CEILING((r.calories / r.servings) * " . $num_cook['num_cook'] . ") AS 'calories', r.RecipeID AS 'recipeID'
-                        FROM Recipe AS r
-                        WHERE r.meal_type = 2";
-    $dinner_sql = "SELECT CEILING((r.calories / r.servings) * " . $num_cook['num_cook'] . ") AS 'calories', r.RecipeID AS 'recipeID'
-                        FROM Recipe AS r
-                        WHERE r.meal_type = 3";
-    
-    $breakfast_res = mysqli_query($con, $breakfast_sql);
-    $lunch_res = mysqli_query($con, $lunch_sql);
-    $dinner_res = mysqli_query($con, $dinner_sql);
+                            WHERE r.meal_type = 2";
+        $dinner_sql = "SELECT CEILING((r.calories / r.servings) * " . $num_cook['num_cook'] . ") AS 'calories', r.RecipeID AS 'recipeID'
+                            FROM Recipe AS r
+                            WHERE r.meal_type = 3";
+        
+        $breakfast_res = mysqli_query($con, $breakfast_sql);
+        $lunch_res = mysqli_query($con, $lunch_sql);
+        $dinner_res = mysqli_query($con, $dinner_sql);
 
-    $breakfast = mysqli_fetch_all($breakfast_res);
-    $lunch = mysqli_fetch_all($lunch_res);
-    $dinner = mysqli_fetch_all($dinner_res);
+        $breakfast = mysqli_fetch_all($breakfast_res);
+        $lunch = mysqli_fetch_all($lunch_res);
+        $dinner = mysqli_fetch_all($dinner_res);
 
-// Display meal plan
-    if (isset($_REQUEST['chooseDate'])) {
-        $startDate = mysqli_real_escape_string($con, $_POST['startDate']);
+        // Display meal plan
+        if (isset($_REQUEST['chooseDate'])) {
+            $setStart = mysqli_real_escape_string($con, $_POST['startDate']);
 
-        $start_date = mysqli_real_escape_string($con, $_POST['startDate']);
-        $start_date_conv = strtotime($start_date);
-        $start_date_num = date('w', $start_date_conv);
+            $user_plans_sql = "SELECT mp.startDate AS 'startDate'
+            FROM user_mealplan AS ump
+            JOIN User AS u ON ump.userID = u.UserID
+            JOIN Meal_Plan AS mp ON ump.mealPlanID = mp.PlanID
+            WHERE u.GoogleAuth= '" . $_SESSION['user_id'] . "'";
 
-        $buttonType = "submit";
-        $buttonGrow = "button hvr-grow";
-	$addError = "";
-    } else { 
-        $start_date_num = 0; 
-        $buttonType = "button";
-        $buttonGrow = "disabled";
-	$addError = 'onclick="addError();"';
-    }
+            $run_user_plans = mysqli_query($con, $user_plans_sql);
 
-    echo '<div class="topButtons">
-    <form name="chooseDate" action="" method="post" id="chooseDate">
-        <div class="chooseDate">
-            <p class="startText">Start Date: </p>
-            <input type="date" class="datePicker" name="startDate" min="' . date("Y-m-d") . '" value="' . $startDate . '">
-            <button class="button dateSubmit hvr-grow" name="chooseDate">Submit</button>
-        </div>
-    </form>
-    <form name="add-to-plan" action="" method="post">
-        <input type="hidden" name="form-startDate" value="' . $start_date . '">
-        <div class="addButton"><button class="' . $buttonGrow . '" type="' . $buttonType . '" name="add-to-plan"' . $disabled . ' title="Select start date to add to meal plan" ' . $addError . '>Add to Meal Plan</button></div>
-    </form>
-    </div>
-    <div class="topContent">
-        <h1 class="calIntake">Daily Calorie Intake: ' . $cal_intake . '</h1>
-        ' . $single_cal . $note . '
-	<button class="button hvr-grow" onclick="window.location.reload();"><div class="reg">Regenerate<span class="material-symbols-outlined">autorenew</span></div></button>
-    </div>';
-    echo '<br>';
+            $userPlans = array();
+            while ($row = mysqli_fetch_assoc($run_user_plans)) {
+                array_push($userPlans, $row['startDate']);
+            }
+            
+            if (in_array($setStart, $userPlans)) {
+                echo '<script> alert("This meal plan already exists. Please pick a new start date."); </script>';
+                unset($_SESSION['start-date']);
+            } else {
+                $_SESSION['start-date'] = $setStart;
+            }
+        }
 
-// Initialize array to store unique identifiers of elements where remove buttons should be
+        if (isset($_SESSION['start-date'])) {
+            $start_date = $_SESSION['start-date'];
+
+            $start_date_conv = strtotime($start_date);
+            $start_date_num = date('w', $start_date_conv);
+
+            $buttonType = "submit";
+            $buttonGrow = "button hvr-grow";
+            $addError = '';
+        } else { 
+            $start_date_num = 0; 
+            $buttonType = "button";
+            $buttonGrow = "disabled";
+            $addError = 'onclick="addError();"';
+            $start_date = '';
+        }
+
+        // Initialize array to store unique identifiers of elements where remove buttons should be
         if(!isset($_SESSION['remove_buttons'])) {
             $_SESSION['remove_buttons'] = array();
         }
@@ -259,6 +262,7 @@
             if (!in_array($unique, $_SESSION['remove_buttons'])) {
                 array_push($_SESSION['remove_buttons'], $unique);
             }
+
         }
 
         // Remove from remove_buttons and kept_recipes if remove button is clicked
@@ -281,13 +285,13 @@
             }
         }
 
-    // Get weekly meal plan based on user's suggested daily calorie intake
-    $week_recipes = array();
-    while (count($week_recipes) < 7) {
-        $total_cal = 0;
-        // Allowing total calories in a day to be within 100 calories of suggested calorie intake
-        while (!($total_cal <= $cal_intake + 100 and $total_cal >= $cal_intake - 100)) {
-            // If recipe is kept, then get the saved recipe, If not get a random recipe
+        // Get weekly meal plan based on user's suggested daily calorie intake
+        $week_recipes = array();
+        while (count($week_recipes) < 7) {
+            $total_cal = 0;
+            // Allowing total calories in a day to be within 100 calories of suggested calorie intake
+            while (!($total_cal <= $cal_intake + 100 and $total_cal >= $cal_intake - 100)) {
+                // If recipe is kept, then get the saved recipe, If not get a random recipe
                 if ($_SESSION['kept_recipes'][count($week_recipes)][0] != 0) {
                     $b_id = $_SESSION['kept_recipes'][count($week_recipes)][0];
 
@@ -338,146 +342,202 @@
                     $d_cal = $rand_d[0];
                     $d_id = $rand_d[1];
                 }
+                $total_cal = $b_cal + $l_cal + $d_cal;
+            }
+            $day_recipe = array();
+            array_push($day_recipe, $b_id);
+            array_push($day_recipe, $l_id);
+            array_push($day_recipe, $d_id);
 
-            $total_cal = $b_cal + $l_cal + $d_cal;
+            array_push($week_recipes, $day_recipe);
         }
-        $day_recipe = array();
-        array_push($day_recipe, $b_id);
-        array_push($day_recipe, $l_id);
-        array_push($day_recipe, $d_id);
 
-        array_push($week_recipes, $day_recipe);
-    }
- 
-	echo '<div class="days">';
-        $days_of_week = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-        $day_count = $start_date_num;
-        foreach($week_recipes as $day) {
+        echo '<div class="topButtons">
+        <form name="chooseDate" action="" method="post" id="chooseDate">
+            <div class="chooseDate">
+                <p class="startText">Start Date: </p>
+                <input type="date" class="datePicker" name="startDate" min="' . date("Y-m-d") . '" value="' . $start_date . '">
+                <button class="button dateSubmit hvr-grow" name="chooseDate" type="submit" onclick="dateCheck();">Submit</button>
+            </div>
+        </form>
+        <form name="add-to-plan" id="add-to-plan" action="" method="post">
+            <input type="hidden" name="form-startDate" value="' . $start_date . '">';
+
+            $weekDays = array('sun', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat');
+            $count = 0;
+            foreach($week_recipes as $day) {
+                foreach($day as $meal) {
+                    echo '<input type="hidden" name="' . $weekDays[$count] . '[]" value="'. $meal. '">';
+                }
+                $count = $count + 1;
+            }
+
+            echo '<div class="addButton"><button class="' . $buttonGrow . '" type="' . $buttonType . '" name="add-to-plan" ' . $disabled . ' title="Select start date to add to meal plan" ' . $addError . '>Add to Meal Plan</button></div>
+        </form>
+        </div>
+        <div class="topContent">
+            <h1 class="calIntake">Daily Calorie Intake: ' . $cal_intake . '</h1>
+            ' . $note . '
+            <button class="button hvr-grow" onclick="window.location.reload();"><div class="reg">Regenerate<span class="material-symbols-outlined">autorenew</span></div></button>
+        </div>';
+        echo '<br>';
+
+        if (isset($_REQUEST['add-to-plan'])) {
+            $start_date = mysqli_real_escape_string($con, $_POST['form-startDate']);
+            $start_date_conv = strtotime($start_date);
+            $end_date_conv = strtotime("+7 day", $start_date_conv);
+            $end_date_display = strtotime("+6 day", $start_date_conv);
+            $end_date = date("Y-m-d", $end_date_conv);
+
+            $add_recipes = array();
+            array_push($add_recipes, $_POST['sun']);
+            array_push($add_recipes, $_POST['mon']);
+            array_push($add_recipes, $_POST['tues']);
+            array_push($add_recipes, $_POST['wed']);
+            array_push($add_recipes, $_POST['thurs']);
+            array_push($add_recipes, $_POST['fri']);
+            array_push($add_recipes, $_POST['sat']);
+
+            $insert_mp = "INSERT INTO Meal_Plan (startDate, endDATE) VALUES ('$start_date', '$end_date')";
+            $run_insert_mp = mysqli_query($con, $insert_mp);
+
+            $mp_id_sql = "SELECT PlanID AS 'planID' FROM Meal_Plan ORDER BY PlanID DESC LIMIT 1";
+            $run_mp_id = mysqli_query($con, $mp_id_sql);
+            $mp_id = mysqli_fetch_assoc($run_mp_id);
+
+            $user_id_sql = "SELECT UserID AS 'userID' FROM User WHERE GoogleAuth = " . $_SESSION['user_id'];
+            $run_user_id = mysqli_query($con, $user_id_sql);
+            $user_id_res = mysqli_fetch_assoc($run_user_id);
+            $user_id = $user_id_res['userID'];
+
+            $plan_id = $mp_id['planID'];
+            
+            $insert_ump = "INSERT INTO user_mealplan (userID, mealPlanID) VALUES ('$user_id', '$plan_id')";
+            $run_insert_ump = mysqli_query($con, $insert_ump);
+
+            $days_of_week = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+
+            $start_date_num = date('w', $start_date_conv);
+
+            $count = 0;
+            while ($count < 7) {
+                if ($start_date_num > 6) { $start_date_num = 0;}
+                $day = $add_recipes[$start_date_num];
+                foreach ($day as $recipe_id) {
+                    $insert_mpe = "INSERT INTO Meal_Plan_Event (recipeID, mealplanID, Chosen_Date) VALUES ('$recipe_id', '$plan_id', '$start_date_num')";
+                    $run_insert_mpe = mysqli_query($con, $insert_mpe);
+                }
+                $start_date_num = $start_date_num + 1;
+                $count = $count + 1;
+            }
+
+            echo '<div class="dPopup" id="dPopup">
+            <div class="dPopup-inner">
+                <br>
+                <span class="logo material-symbols-outlined">grocery</span>
+                <p>Meal plan for ' . date("M d", $start_date_conv) . ' to ' . date("M d", $end_date_display) . ' has been added!</p>
+                <br>
+                <div class="popupButtons">
+                    <form name="viewPlan" action="meal_plan.php" method="post" id="viewPlan">
+                        <input type="hidden" id="calStart" name="calStart" value="' . $start_date . '">
+                        <a href="meal_plan.php"><button type="submit" class="button hvr-grow" name="calPlanSubmit" id="calPlanSubmit">View Plan</button></a>
+                    </form>
+                    <button type="button" class="closeButton hvr-grow" id="closeDelete">Close</button>
+                </div>
+                <br>
+            </div>
+            </div>';
+
+            echo '<script> dPopup.classList.add("open"); </script>';
+            echo '<script>
+                document.getElementById("closeDelete").addEventListener("click", () => {
+                    dPopup.classList.add("close");
+                });
+            </script>';
+        }
+
+        echo '<div class="days">';
+            $days_of_week = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+            $meals = array("Breakfast", "Lunch", "Dinner");
+            $day_count = $start_date_num;
+            $count = 0;
+            while ($count < 7) {
                 if ($day_count > 6) { $day_count = 0; }
-            echo '<div class="day">
+                echo '<div class="day">
                 <h3>' . $days_of_week[$day_count] . '</h3>
                 <div class="recipes">';
-                    foreach ($day as $recipe_id) {
-                        $get_recipe = "SELECT RecipeID AS 'recipeID', Name AS 'recipeName', Url AS 'recipeUrl', 
-                        CASE WHEN meal_type = 1 THEN 'Breakfast' WHEN meal_type = 2 THEN 'Lunch' WHEN meal_type = 3 THEN 'Dinner' END AS 'mealType'
-                        FROM Recipe
-                        WHERE RecipeID = " . $recipe_id;
+                
+                $day = $week_recipes[$day_count];
+                foreach ($day as $recipe_id) {
+                    $get_recipe = "SELECT RecipeID AS 'recipeID', Name AS 'recipeName', Url AS 'recipeUrl',
+                    CASE WHEN meal_type = 1 THEN 'Breakfast' WHEN meal_type = 2 THEN 'Lunch' WHEN meal_type = 3 THEN 'Dinner' END AS 'mealType'
+                    FROM Recipe
+                    WHERE RecipeID = " . $recipe_id;
 
-                        $recipes_res = mysqli_query($con, $get_recipe);
-                        $recipe = mysqli_fetch_assoc($recipes_res);
-
-                        $meal_type_sql = $recipe["mealType"];
-                            switch($meal_type_sql) {
-                                case "Breakfast":
-                                    $meal_type = 1;
-                                    break;
-                                case "Lunch":
-                                    $meal_type = 2;
-                                    break;
-                                case "Dinner":
-                                    $meal_type = 3;
-                                    break;
-                            }
-                            $unique = $day_count . $meal_type . $recipe["recipeID"];
-
-                            echo '<div class="recipe">
-                                <div class="keepDiv">
-                                    <p class="mealType">' . $recipe["mealType"] . '</p>
-                                    <form name="keepForm' . $recipe["recipeID"] . '" action="" method="post" id="keepForm' . $recipe["recipeID"] . '">';
-
-                                        if (in_array($unique, $_SESSION['remove_buttons'])) {
-                                            $value = '<span class="material-symbols-outlined">close</span>';
-                                            $class = 'remove';
-                                            $elementId = 'removeSubmit';
-                                            echo '<input type="hidden" name="removeRecipe" id="removeRecipe" value="' . $day_count . ',' . $meal_type . '">
-                                            <input type="hidden" name="removeRecipeUnique" id="removeRecipe" value="' . $unique . '">';
-                                        } else {
-                                            $value = 'Keep';
-                                            $class = 'button keep';
-                                            $elementId = 'keepSubmit';
-                                            echo '<input type="hidden" name="keep-id" value="' . $recipe["recipeID"] . '">
-                                            <input type="hidden" name="keep-day" value="' . $day_count . '">
-                                            <input type="hidden" name="keep-type" value="' . $recipe["mealType"] . '">
-                                            <input type="hidden" name="keep-unique" value="' . $unique . '">';
-                                        }
-
-                                        echo '<button type="submit" class="' . $class . ' hvr-grow" id="' . $elementId . $unique . '">' . $value . '</button>
-                                    </form>
-                                </div>
-                            <form name="individualRecipe' . $recipe["recipeID"] . '" id="individualRecipe' . $recipe["recipeID"] . '" action="individual_recipe.php" method="post">
-                                <input type="hidden" name="recipeToView" value="' . $recipe["recipeID"] . '">
-                            </form>
-                                <div class="recipeDiv hvr-grow" id="recipeDiv" onclick="submitForm(' . $recipe["recipeID"] . ')">
-                                    <img class="recipeImg" src="' . $recipe["recipeUrl"] . '" alt="' . $recipe["recipeName"] . '">
-                                    <p class="dishName">' . $recipe["recipeName"] . '</p>
-                                </div>
-                        </div>';
+                    $recipes_res = mysqli_query($con, $get_recipe);
+                    $recipe = mysqli_fetch_assoc($recipes_res);
+                    $meal_type_sql = $recipe["mealType"];
+                    switch($meal_type_sql) {
+                        case "Breakfast":
+                            $meal_type = 1;
+                            break;
+                        case "Lunch":
+                            $meal_type = 2;
+                            break;
+                        case "Dinner":
+                            $meal_type = 3;
+                            break;
                     }
-                echo '</div>
-            </div>';
-            $day_count = $day_count + 1;
-        }
-    echo '</div>';
+                    $unique = $day_count . $meal_type . $recipe["recipeID"];
 
-    if (isset($_REQUEST['add-to-plan'])) {
-        $start_date = mysqli_real_escape_string($con, $_POST['form-startDate']);
-        $start_date_conv = strtotime($start_date);
-        $end_date_conv = strtotime("+7 day", $start_date_conv);
-        $end_date = date("Y-m-d", $end_date_conv);
+                    echo '<div class="recipe">
+                        <div class="keepDiv">
+                            <p class="mealType">' . $recipe["mealType"] . '</p>
+                            <form name="keepForm' . $recipe["recipeID"] . '" action="" method="post" id="keepForm' . $recipe["recipeID"] . '">';
 
-        $insert_mp = "INSERT INTO Meal_Plan (startDate, endDATE) VALUES ('$start_date', '$end_date')";
-        $run_insert_mp = mysqli_query($con, $insert_mp);
-	echo $insert_mp;
+                                if (in_array($unique, $_SESSION['remove_buttons'])) {
+                                    $value = '<span class="material-symbols-outlined">close</span>';
+                                    $class = 'remove hvr-grow';
+                                    $elementId = 'removeSubmit';
+                                    echo '<input type="hidden" name="removeRecipe" id="removeRecipe" value="' . $day_count . ',' . $meal_type . '">
+                                    <input type="hidden" name="removeRecipeUnique" id="removeRecipe" value="' . $unique . '">';
+                                } else {
+                                    $value = 'Keep';
+                                    $class = 'button keep hvr-grow';
+                                    $elementId = 'keepSubmit';
+                                    echo '<input type="hidden" name="keep-id" value="' . $recipe["recipeID"] . '">
+                                    <input type="hidden" name="keep-day" value="' . $day_count . '">
+                                    <input type="hidden" name="keep-type" value="' . $recipe["mealType"] . '">
+                                    <input type="hidden" name="keep-unique" value="' . $unique . '">';
+                                }
 
-        $mp_id_sql = "SELECT PlanID AS 'planID' FROM Meal_Plan ORDER BY PlanID DESC LIMIT 1";
-        $run_mp_id = mysqli_query($con, $mp_id_sql);
-        $mp_id = mysqli_fetch_assoc($run_mp_id);
+                                if (!isset($_SESSION['start-date'])) {
+                                    $class = "disabledK";
+                                    $hide = 'style="display: none;"';
+                                    $buttonTypeK = 'button';
+                                } else {
+                                     $hide = '';
+                                     $buttonTypeK = 'submit';
+                                }
 
-        $user_id_sql = "SELECT UserID AS 'userID' FROM User WHERE GoogleAuth = " . $_SESSION['user_id'];
-        $run_user_id = mysqli_query($con, $user_id_sql);
-        $user_id_res = mysqli_fetch_assoc($run_user_id);
-        $user_id = $user_id_res['userID'];
-
-        $plan_id = $mp_id['planID'];
-        
-        $insert_ump = "INSERT INTO user_mealplan (userID, mealPlanID) VALUES ('$user_id', '$plan_id')";
-        $run_insert_ump = mysqli_query($con, $insert_ump);
-
-        $days_of_week = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-
-        $start_date_num = date('w', $start_date_conv);
-        foreach ($week_recipes as $day) {
-            if ($start_date_num > 6) { $start_date_num = 0;}
-            foreach ($day as $recipe_id) {
-                $insert_mpe = "INSERT INTO Meal_Plan_Event (recipeID, mealplanID, Chosen_Date) VALUES ('$recipe_id', '$plan_id', '$start_date_num')";
-                $run_insert_mpe = mysqli_query($con, $insert_mpe);
+                                echo '<button type="' . $buttonTypeK . '" class="' . $class . '" id="' . $elementId . $unique . '" ' . $hide . '>' . $value . '</button>
+                            </form>
+                        </div>
+                        <form name="individualRecipe' . $recipe["recipeID"] . '" id="individualRecipe' . $recipe["recipeID"] . '" action="individual_recipe.php" method="post">
+                            <input type="hidden" name="recipeToView" value="' . $recipe["recipeID"] . '">
+                        </form>
+                            <div class="recipeDiv hvr-grow" id="recipeDiv" onclick="submitForm(' . $recipe["recipeID"] . ')">
+                                <img class="recipeImg" src="' . $recipe["recipeUrl"] . '" alt="' . $recipe["recipeName"] . '">
+                                <p class="dishName">' . $recipe["recipeName"] . '</p>
+                            </div>
+                    </div>';
+                    }
+                    echo '</div>
+                </div>';
+                $day_count = $day_count + 1;
+                $count = $count + 1;
             }
-            $start_date_num = $start_date_num + 1;
-        }
-
-        echo '<div class="dPopup" id="dPopup">
-        <div class="dPopup-inner">
-            <br>
-            <span class="logo material-symbols-outlined">grocery</span>
-            <p>Meal plan for ' . date("M d", $start_date_conv) . ' to ' . date("M d", $end_date_conv) . ' has been added!</p>
-            <br>
-            <div class="popupButtons">
-                <a href="meal_plan.php"><button type="button" class="button hvr-grow">View Plan</button></a>
-                <button type="button" class="button hvr-grow" id="closeDelete">Close</button>
-            </div>
-            <br>
-        </div>
-        </div>';
-
-        echo '<script> dPopup.classList.add("open"); </script>';
-        echo '<script>
-            document.getElementById("closeDelete").addEventListener("click", () => {
-                dPopup.classList.add("close");
-            });
-        </script>';
     }
-}
-
 ?>
 
 </body>

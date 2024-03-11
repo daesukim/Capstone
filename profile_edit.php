@@ -68,6 +68,15 @@
                 $userEmail = $_SESSION['email'];
 
                 // Query to get user height
+                $userGenderQuery = "SELECT Gender FROM User WHERE Email = '$userEmail'";
+                $userGenderResult = mysqli_query($conn, $userGenderQuery);
+                $userGender = mysqli_fetch_assoc($userGenderResult)['Gender'];
+
+                $userAgeQuery = "SELECT Age FROM User WHERE Email = '$userEmail'";
+                $userAgeResult = mysqli_query($conn, $userAgeQuery);
+                $userAge = mysqli_fetch_assoc($userAgeResult)['Age'];
+
+                // Query to get user height
                 $userHeightQuery = "SELECT Height FROM User WHERE Email = '$userEmail'";
                 $userHeightResult = mysqli_query($conn, $userHeightQuery);
                 $userHeight = mysqli_fetch_assoc($userHeightResult)['Height'];
@@ -76,14 +85,34 @@
                 $userWeightQuery = "SELECT Weight FROM User WHERE Email = '$userEmail'";
                 $userWeightResult = mysqli_query($conn, $userWeightQuery);
                 $userWeight = mysqli_fetch_assoc($userWeightResult)['Weight'];
+                
+                $userActivityQuery = "SELECT activity_level FROM User WHERE Email = '$userEmail'";
+                $userActivityResult = mysqli_query($conn, $userActivityQuery);
+                $userActivity = mysqli_fetch_assoc($userActivityResult)['activity_level'];
+           
 
                 echo "<h1>" . $_SESSION['first_name'] . "</h1>";
                 echo "<p>" . $_SESSION['email'] . "</p>";
-                echo "<p>Height: " . $userHeight . " in | Weight: " . $userWeight . " lbs</p>";
+                echo "<p>". $userGender. " | ". "Age: ". $userAge. " | Height: " . $userHeight . " in | Weight: " . $userWeight . " lbs</p>";
+                
+                if ($userActivity == 1) {
+                    echo "Activity Level: Moderate";
+                } elseif ($userActivity == 2) {
+                    echo "Activity Level: Lightly Active";
+                } elseif ($userActivity == 3) {
+                    echo "Activity Level: Moderately Active";
+                } elseif ($userActivity == 4) {
+                    echo "Activity Level: Very Active";
+                } elseif ($userActivity == 5) {
+                    echo "Activity Level: Extra Active";
+                } else {
+                    echo "Unknown activity level";
+                }
             } else {
                 echo "<h1> Name </h1>";
                 echo "<p class='show_email'>Email</p>";
-                echo "<p class='show_profile_info'>Height | Weight</p>";
+                echo "<p class='show_profile_info'>Gender | Age | Height | Weight</p>";
+                echo "<p class='show_profile_info'>Activity Level</p>";
             }
 
             mysqli_close($conn);
@@ -156,7 +185,7 @@
                             <input type="hidden" name="selectedAllergy" id="selectedAllergy" value="">
                         </div>
                         <div class="household_section">
-                            <h2>NUMBER OF HOUSEHOLD</h2>
+                            <h2>Serving Number</h2>
                             <div class="household_input">
                                 <input type="number" id="household" name="tentacles" min="1" max="100" value="1" />
                             </div>
@@ -179,12 +208,46 @@
                         <button class="convert" onclick="convertWeightToKg(event)">Convert Weight</button>
                         <div id="weightResult"></div>
                     </div>
+                    <div class="gender">
+                        <label for="genderInput">Select Your Gender</label><br>
+                        <input type="radio" class="radio_btn" style="width: 20px; height: 20px;" id="genderInput" name="gender" value="M"/>
+                        <label for="genderInput" class="radio_label" style="font-size: 20px;">M</label>
+                        <input type="radio" class="radio_btn" style="width: 20px; height: 20px;" id="genderInput1" name="gender" value="F"/>
+                        <label for="genderInput1" class="radio_label" style="font-size: 20px;">F</label>    
+                    </div>
+                    <div class="age">
+                        <label for="ageInput">Enter Your Age</label>
+                        <input type="number" id="ageInput" name="age" placeholder="Enter your Age" pattern="[0-9]+([\.,][0-9]+)?"/>
+                    </div>
+                    <div class="activity">
+                        <label for="activity">Select Your Activity Level</label><br>
+                        <input type="radio" class="radio" style="width: 20px; height: 20px;"id="level1" name="activity" value="1"/>
+                        <label for="level1" class="radio_label" style="font-size: 20px;">Sedentary</label>
+                        
+                        <input type="radio" class="radio" style="width: 20px; height: 20px;" id="level2" name="activity" value="2"/>
+                        <label for="level2" class="radio_label" style="font-size: 20px;">Lightly Active</label>
+                        
+                        <input type="radio" class="radio" style="width: 20px; height: 20px;" id="level3" name="activity" value="3"/>
+                        <label for="level3" class="radio_label" style="font-size: 20px;">Moderately Active</label>
+                        
+                        <input type="radio" class="radio" style="width: 20px; height: 20px;" id="level4" name="activity" value="4"/>
+                        <label for="level4" class="radio_label" style="font-size: 20px;">Very Active</label>
+                        
+                        <input type="radio" class="radio" style="width: 20px; height: 20px;" id="level5" name="activity" value="5"/>
+                        <label for="level5" class="radio_label" style="font-size: 20px;">Extra Active</label> 
+                    </div>
                     <button class="savesub" id="profilesubmit" type="submit">SAVE&SUBMIT</button>
                 </form>
             </div>
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var text2 = document.getElementById("demo2");
+                var text3 = document.getElementById("demo3");
+                text2.style.display = "block";
+                text3.style.display = "none";
+            });
             function toggleText2() {
                 var text = document.getElementById("demo2");
                 var text3 = document.getElementById("demo3");

@@ -37,10 +37,10 @@
                 <li><a class="closebtn">&times;</a></li>
                 <li><a href="landing.php">Home</a></li>
                 <li><a href="view_recipe.php">View Recipes</a></li>
+                <li><a href="recipe.php">Create Recipe</a></li>
                 <li><a href="meal_plan.php">My Meal Plan</a></li>
                 <li><a href="calorie.php">Calorie Conscious Meal Plan</a></li>
                 <li><a href="profile.php">Profile Settings</a></li>
-                <li><a href="recipe.php">Recipe Creation</a></li>
             </ul>
         </nav>
 

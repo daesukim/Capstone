@@ -1,146 +1,146 @@
 body {margin: 0px; font-family: inter, sans-serif;}
 
 .bar {
-    position: sticky; 
-    box-sizing: border-box;
-    width: 100%;
-    background: #6ED184;
-    padding: 1.3rem;
-    /* border-bottom: thin solid #E11584; */
-    margin: 0;
-  }
-  
-.gg {
-    font-family: 'Inter', sans-serif;
-    font-size: 23px;
-    color: white;
-    font-weight: 700;
+  position: sticky; 
+  box-sizing: border-box;
+  width: 100%;
+  background: #6ED184;
+  padding: 1.3rem;
+  /* border-bottom: thin solid #E11584; */
+  margin: 0;
 }
-  
+
+.gg {
+  font-family: 'Inter', sans-serif;
+  font-size: 23px;
+  color: white;
+  font-weight: 700;
+}
+
 /* GOOGLE ICON */
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+font-variation-settings:
+'FILL' 0,
+'wght' 400,
+'GRAD' 0,
+'opsz' 24
 }
-  
+
 .icon {
-    color: white;
-    margin-top: 4px;
+  color: white;
+  margin-top: 4px;
 }
-  
+
 .items {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Side Bar Navigation */
 
 .material-symbols-outlined {
-    font-variation-settings:
-    'FILL' 0,
-    'wght' 500,
-    'GRAD' 0,
-    'opsz' 48
-  }
-  
-  .openbtn {
-      position: absolute;
-      right: 20px;
-      top: 10px;
-      color: white;
-      font-family: 'PT Sans', sans-serif;
-  }
-  .openbtn:hover {
-      color: black;
-      cursor: pointer;
-  }
-  .menu-button {
-      font-size: 36px !important;
-      position: relative;
-      top: 6px;
-      left: -4px;
-  }
-  .menu-text {
-      font-size: 12px;
-      display: block;
-  }
-  ul {
-      margin: 0;
-      padding: 0;
-  }
-  li {
-      list-style-type: none;
-  }
-  
-  /* The side navigation menu */
-  .all-over-bkg {
-      display: none;
-  }
-  
-  .is-visible {
-      background-color: rgba(0,0,0,0.4);
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100vh;
-      width: 100%;
-      z-index: 9999;
-      display: block;
-  }
-  
-  #mySidenav {
-      z-index: 10000;
-  }
-  
-  .sidenav {
-      height: 100%; /* 100% Full-height */
-      width: 0; /* 0 width - change this with JavaScript */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Stay on top */
-      top: 0; /* Stay at the top */
-      right: 0;
-      overflow-x: hidden; /* Disable horizontal scroll */
-      padding-top: 60px; /* Place content 60px from the top */
-      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-      background-color: white;  
-  }
-    
-  /* The navigation menu links */
-  .sidenav a {
-      padding: 8px 8px 8px 32px;
-      text-decoration: none;
-      font-size: 20px;
-      color: #818181;
-      display: block;
-      transition: 0.3s;
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      color: black;
-  }
-  
-  /* When you mouse over the navigation links, change their color */
-  .sidenav a:hover {
-      color: grey;
-  }
-  
-  /* Position and style the close button (top right corner) */
-  .sidenav .closebtn {
-      position: absolute;
-      top: 0;
-      right: 25px;
-      font-size: 36px;
-      margin-left: 50px;
-  }
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 500,
+  'GRAD' 0,
+  'opsz' 48
+}
 
-  .sidenav .closebtn:hover {
+.openbtn {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: white;
+    font-family: 'PT Sans', sans-serif;
+}
+.openbtn:hover {
+    color: black;
     cursor: pointer;
-  }
+}
+.menu-button {
+    font-size: 36px !important;
+    position: relative;
+    top: 6px;
+    left: -4px;
+}
+.menu-text {
+    font-size: 12px;
+    display: block;
+}
+ul {
+    margin: 0;
+    padding: 0;
+}
+li {
+    list-style-type: none;
+}
+
+/* The side navigation menu */
+.all-over-bkg {
+    display: none;
+}
+
+.is-visible {
+    background-color: rgba(0,0,0,0.4);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 9999;
+    display: block;
+}
+
+#mySidenav {
+    z-index: 10000;
+}
+
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    right: 0;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    background-color: white;  
+}
+  
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: black;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: grey;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sidenav .closebtn:hover {
+  cursor: pointer;
+}
 /*body container*/
 .creation_container {
     padding: 5%;
@@ -171,14 +171,13 @@ body {margin: 0px; font-family: inter, sans-serif;}
   }
  
   .file-input label {
-    display: block;
-    position: relative;
+    display: flex;
+
     width: 200px;
     height: 200px;
     border-radius: 7px;
     background-color: lightgrey;
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
-    display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;

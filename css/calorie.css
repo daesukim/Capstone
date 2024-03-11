@@ -470,6 +470,25 @@ h3 {
     border: none;
 }
 
+.closeButton {
+    padding: 11px 12px;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: var(--green);
+    border: none;
+    border-radius: 12px;
+    height: 45px;
+}
+
+.closeButton:hover {
+    background-color: var(--dark-green);
+}
+
 /* MEDIA QUERIES */
 
 @media (max-width: 400px) {

@@ -327,6 +327,7 @@ input:focus + label {
 .profile_section {
   display: flex; 
   flex-direction: column;
+  margin-left: 5%;
 }
 .profile_section .convert {
   width: 150px;
@@ -439,6 +440,27 @@ input:focus + label {
 }
 .allergen p:hover {
     border: 10px solid red;
+}
+
+
+.gender {
+  margin-top: 3%;
+}
+.age {
+  display: flex; 
+  flex-direction: column;
+  margin-top: 3%;
+}
+
+.activity {
+  margin-top: 3%;
+}
+.radio_btn {
+  transform: scale(0.8); /* Adjust the scale factor as needed */
+  margin-right: 5px;
+}
+.radio_label {
+  font-size: 12px;
 }
 @media screen and (max-width: 900px) {
   .element_container {
